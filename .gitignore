@@ -1,0 +1,8 @@
+.claude/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.jpeg
+
+# fontes do catálogo (tabelas de preço dos fornecedores) — não fazem parte do site
+*.pdf

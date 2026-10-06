@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Catálogo Bel Col e Eccos — dermocosméticos profissionais em Brusque/SC, com envio para todo o Brasil. Monte sua sacolinha, calcule o frete e finalize pelo WhatsApp." />
+    <meta name="theme-color" content="#3A2452" />
+    <title>Catarina Cosméticos & Eccos Brusque · Catálogo</title>
+    <link rel="icon" href="assets/logo-catarina.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body data-marca="todas">
+    <!-- Faixa de aviso (editável no painel) -->
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <span class="topbar-aviso"><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> <span id="aviso-topo"></span></span>
+            <span class="topbar-info">
+                <span id="horario-topo-box"><i class="fa-regular fa-clock" aria-hidden="true"></i> <span id="horario-topo"></span></span>
+                <a id="whats-topo" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> <span id="telefone-topo">Fale com a gente</span></a>
+            </span>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="container header-inner">
+            <a href="#inicio" class="marca" aria-label="Início" id="link-inicio">
+                <span class="marca-avatares" id="marca-avatares"></span>
+                <span class="marca-texto">
+                    <strong id="nome-loja"></strong>
+                    <small id="slogan-loja"></small>
+                </span>
+            </a>
+
+            <label class="busca" role="search">
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                <input id="busca-input" type="search" placeholder="Buscar sérum, vitamina C, protetor solar..." aria-label="Buscar produto" autocomplete="off">
+            </label>
+
+            <button class="btn-sacolinha" id="btn-abrir-sacolinha" type="button" aria-label="Abrir sacolinha">
+                <span class="btn-sacolinha-icone">
+                    <i class="fa-solid fa-bag-shopping" aria-hidden="true"></i>
+                    <span class="badge" id="badge-sacolinha">0</span>
+                </span>
+                <span class="btn-sacolinha-texto">
+                    <small>Sacolinha</small>
+                    <strong id="total-header">R$ 0,00</strong>
+                </span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Abas das marcas + categorias da marca escolhida -->
+    <nav class="navegacao" aria-label="Marcas e categorias">
+        <div class="container">
+            <div class="abas-marca" id="abas-marca" role="tablist"></div>
+            <div class="categorias-inner" id="categorias-bar"></div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- HERO: as duas marcas, lado a lado -->
+        <section class="hero" id="inicio">
+            <div class="container">
+                <div class="hero-texto">
+                    <h1 id="hero-titulo"></h1>
+                    <p id="hero-sub"></p>
+                </div>
+                <div class="portas" id="portas"><!-- uma "porta" por marca --></div>
+                <ul class="hero-selos">
+                    <li><i class="fa-solid fa-truck-fast" aria-hidden="true"></i> Envio para todo o Brasil</li>
+                    <li><i class="fa-solid fa-store" aria-hidden="true"></i> Retirada em Brusque/SC</li>
+                    <li><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Pagamento combinado no WhatsApp</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- LANÇAMENTOS E DESTAQUES -->
+        <section class="secao secao-novidades" id="novidades" hidden>
+            <div class="container">
+                <div class="secao-topo">
+                    <div>
+                        <h2 class="secao-titulo">Lançamentos e destaques</h2>
+                        <p class="secao-sub" id="novidades-sub"></p>
+                    </div>
+                    <div class="carrossel-setas">
+                        <button type="button" class="seta" data-dir="-1" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button type="button" class="seta" data-dir="1" aria-label="Próximo"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                </div>
+                <div class="carrossel" id="carrossel-novidades"></div>
+            </div>
+        </section>
+
+        <!-- PRODUTOS -->
+        <section class="secao" id="produtos">
+            <div class="container">
+                <div class="secao-topo">
+                    <div>
+                        <p class="trilha" id="trilha"></p>
+                        <h2 class="secao-titulo" id="titulo-lista">Todos os produtos</h2>
+                        <p class="secao-sub" id="contador-produtos"></p>
+                    </div>
+                    <div class="filtros">
+                        <label class="ordenar" id="filtro-uso-box" hidden>
+                            <span>Uso</span>
+                            <select id="filtro-uso">
+                                <option value="">Todos</option>
+                                <option value="profissional">Profissional (cabine)</option>
+                                <option value="homecare">Home care</option>
+                            </select>
+                        </label>
+                        <label class="ordenar">
+                            <span>Ordenar</span>
+                            <select id="ordenar-select">
+                                <option value="catalogo">Ordem do catálogo</option>
+                                <option value="menor">Menor preço</option>
+                                <option value="maior">Maior preço</option>
+                                <option value="nome">Nome (A-Z)</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+                <p class="aviso-precos" id="aviso-precos"></p>
+                <div id="lista-produtos"></div>
+            </div>
+        </section>
+
+        <!-- COMO COMPRAR -->
+        <section class="secao secao-como">
+            <div class="container">
+                <h2 class="secao-titulo titulo-centro">Como fazer seu pedido</h2>
+                <ol class="passos">
+                    <li><span class="passo-num">1</span><strong>Escolha a marca</strong><p>Bel Col ou Eccos, separadas por categoria.</p></li>
+                    <li><span class="passo-num">2</span><strong>Monte a sacolinha</strong><p>Ajuste as quantidades e confira os valores.</p></li>
+                    <li><span class="passo-num">3</span><strong>Calcule o frete</strong><p>Digite o CEP para ver valor e prazo, ou retire em Brusque.</p></li>
+                    <li><span class="passo-num passo-num--whats"><i class="fa-brands fa-whatsapp"></i></span><strong>Finalize no WhatsApp</strong><p>O pedido chega pronto e o pagamento é combinado na conversa.</p></li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- CONTATO -->
+        <section class="secao secao-loja" id="loja">
+            <div class="container">
+                <div class="loja-card">
+                    <div class="loja-texto">
+                        <h2 class="secao-titulo">Fale com a distribuidora</h2>
+                        <p class="loja-linha"><i class="fa-solid fa-location-dot"></i> <span id="loja-endereco"></span></p>
+                        <p class="loja-linha" id="loja-horario-linha"><i class="fa-regular fa-clock"></i> <span id="loja-horario"></span></p>
+                        <div class="loja-botoes">
+                            <a class="btn btn-whats" id="loja-whats" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Chamar no WhatsApp</a>
+                            <a class="btn btn-contorno" id="loja-mapa" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-map-location-dot"></i> Como chegar</a>
+                        </div>
+                    </div>
+                    <div class="loja-perfis" id="loja-perfis"><!-- os dois perfis do Instagram --></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape">
+        <div class="container rodape-inner">
+            <p id="rodape-copy"></p>
+            <p class="rodape-credito">Site desenvolvido por <a id="credito-tf" href="#" target="_blank" rel="noopener">TF Solutions</a> · <a href="admin.html" class="link-admin"><i class="fa-solid fa-lock"></i> Área da loja</a></p>
+        </div>
+    </footer>
+
+    <!-- Botão flutuante do WhatsApp -->
+    <a class="whats-flutuante" id="whats-flutuante" href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+
+    <!-- Barra inferior (celular) -->
+    <div class="barra-sacolinha" id="barra-sacolinha" aria-live="polite">
+        <div>
+            <small id="barra-qtd">0 itens</small>
+            <strong id="barra-total">R$ 0,00</strong>
+        </div>
+        <button type="button" class="btn btn-claro" id="barra-abrir"><i class="fa-solid fa-bag-shopping"></i> Ver sacolinha</button>
+    </div>
+
+    <!-- Aviso rápido -->
+    <div class="toast" id="toast" role="status"></div>
+
+    <!-- ═══════════ SACOLINHA ═══════════ -->
+    <div class="fundo-escuro" id="fundo-sacolinha"></div>
+    <aside class="sacolinha" id="sacolinha" aria-label="Sacolinha" aria-hidden="true">
+        <div class="sacolinha-topo">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Minha sacolinha</h3>
+            <button type="button" class="btn-fechar" id="btn-fechar-sacolinha" aria-label="Fechar">&times;</button>
+        </div>
+
+        <ol class="etapas" id="etapas">
+            <li data-etapa="1" class="ativa"><span>1</span><small>Itens</small></li>
+            <li data-etapa="2"><span>2</span><small>Entrega</small></li>
+            <li data-etapa="3"><span>3</span><small>Pagar</small></li>
+            <li data-etapa="4"><span>4</span><small>Dados</small></li>
+            <li data-etapa="5"><span>5</span><small>Resumo</small></li>
+        </ol>
+
+        <div class="sacolinha-corpo" id="sacolinha-corpo">
+            <!-- 1. ITENS -->
+            <section class="etapa" data-etapa="1">
+                <div id="lista-itens"></div>
+                <div class="cupom" id="cupom-box">
+                    <div class="cupom-linha">
+                        <input type="text" id="cupom-input" placeholder="Tem cupom de desconto?" autocomplete="off">
+                        <button type="button" class="btn btn-escuro btn-sm" id="cupom-btn">Aplicar</button>
+                    </div>
+                    <p class="cupom-msg" id="cupom-msg"></p>
+                </div>
+            </section>
+
+            <!-- 2. ENTREGA OU RETIRADA -->
+            <section class="etapa" data-etapa="2" hidden>
+                <h4 class="etapa-titulo">Como você quer receber?</h4>
+                <div class="opcoes-entrega" role="radiogroup">
+                    <button type="button" class="opcao-entrega ativa" data-tipo="entrega" role="radio" aria-checked="true">
+                        <i class="fa-solid fa-truck-fast"></i><strong>Entrega</strong><small>Enviamos para todo o Brasil</small>
+                    </button>
+                    <button type="button" class="opcao-entrega" data-tipo="retirada" role="radio" aria-checked="false">
+                        <i class="fa-solid fa-store"></i><strong>Retirada</strong><small>Busque em Brusque/SC</small>
+                    </button>
+                </div>
+
+                <div id="form-entrega">
+                    <div class="campo">
+                        <label for="ent-cep">CEP de entrega</label>
+                        <div class="cep-linha">
+                            <input type="text" id="ent-cep" placeholder="00000-000" inputmode="numeric" maxlength="9" autocomplete="postal-code">
+                            <button type="button" class="btn btn-escuro btn-sm" id="ent-cep-btn"><i class="fa-solid fa-calculator"></i> Calcular frete</button>
+                        </div>
+                        <a class="campo-ajuda link" href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noopener">Não sei meu CEP</a>
+                    </div>
+
+                    <div id="frete-resultado" class="frete-resultado" aria-live="polite"></div>
+
+                    <div id="ent-endereco" hidden>
+                        <div class="campo-linha">
+                            <div class="campo campo--grande">
+                                <label for="ent-rua">Rua / Avenida</label>
+                                <input type="text" id="ent-rua" autocomplete="address-line1">
+                            </div>
+                            <div class="campo">
+                                <label for="ent-numero">Número</label>
+                                <input type="text" id="ent-numero" placeholder="Nº" inputmode="numeric">
+                            </div>
+                        </div>
+                        <div class="campo-linha">
+                            <div class="campo">
+                                <label for="ent-complemento">Complemento <em>(opcional)</em></label>
+                                <input type="text" id="ent-complemento" placeholder="Sala, apto, bloco...">
+                            </div>
+                            <div class="campo">
+                                <label for="ent-bairro">Bairro</label>
+                                <input type="text" id="ent-bairro">
+                            </div>
+                        </div>
+                        <div class="campo-linha">
+                            <div class="campo campo--grande">
+                                <label for="ent-cidade">Cidade</label>
+                                <input type="text" id="ent-cidade" autocomplete="address-level2">
+                            </div>
+                            <div class="campo">
+                                <label for="ent-uf">UF</label>
+                                <input type="text" id="ent-uf" maxlength="2" style="text-transform:uppercase">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-retirada" hidden>
+                    <div class="aviso aviso--loja">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div><strong>Retire em:</strong><br><span id="ret-endereco"></span></div>
+                    </div>
+                    <div class="campo-linha">
+                        <div class="campo campo--grande">
+                            <label for="ret-data">Dia</label>
+                            <input type="date" id="ret-data">
+                        </div>
+                        <div class="campo campo--grande">
+                            <label for="ret-hora">Horário</label>
+                            <select id="ret-hora"></select>
+                        </div>
+                    </div>
+                    <p class="campo-ajuda" id="ret-dias-info"></p>
+                </div>
+            </section>
+
+            <!-- 3. PAGAMENTO -->
+            <section class="etapa" data-etapa="3" hidden>
+                <h4 class="etapa-titulo">Como prefere pagar?</h4>
+                <div class="opcoes-pagamento" id="opcoes-pagamento"></div>
+                <div class="aviso aviso--whats">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <p id="aviso-pagamento"></p>
+                </div>
+                <div class="campo">
+                    <label for="obs-input">Observações <em>(opcional)</em></label>
+                    <textarea id="obs-input" rows="2" placeholder="Ex.: tonalidade do protetor, melhor horário para contato..."></textarea>
+                </div>
+            </section>
+
+            <!-- 4. DADOS -->
+            <section class="etapa" data-etapa="4" hidden>
+                <h4 class="etapa-titulo">Seus dados</h4>
+                <div class="campo">
+                    <label for="cli-nome">Nome completo</label>
+                    <input type="text" id="cli-nome" placeholder="Nome e sobrenome" autocomplete="name">
+                </div>
+                <div class="campo">
+                    <label for="cli-telefone">WhatsApp</label>
+                    <input type="tel" id="cli-telefone" placeholder="(47) 99999-9999" maxlength="15" autocomplete="tel">
+                </div>
+                <div class="campo">
+                    <label for="cli-empresa">Clínica / estúdio <em>(opcional)</em></label>
+                    <input type="text" id="cli-empresa" placeholder="Nome do seu espaço" autocomplete="organization">
+                </div>
+                <div class="campo">
+                    <label for="cli-doc">CPF ou CNPJ <em>(opcional, para a nota e o envio)</em></label>
+                    <input type="text" id="cli-doc" inputmode="numeric" maxlength="18" autocomplete="off">
+                </div>
+                <p class="campo-ajuda"><i class="fa-solid fa-shield-halved"></i> Usamos seus dados só para confirmar e enviar o pedido.</p>
+            </section>
+
+            <!-- 5. RESUMO -->
+            <section class="etapa" data-etapa="5" hidden>
+                <h4 class="etapa-titulo">Confira seu pedido</h4>
+                <div id="resumo"></div>
+            </section>
+
+            <!-- SUCESSO -->
+            <section class="etapa etapa-sucesso" data-etapa="ok" hidden>
+                <div class="sucesso">
+                    <div class="sucesso-icone"><i class="fa-brands fa-whatsapp"></i></div>
+                    <h4>Quase lá!</h4>
+                    <p>Abrimos o WhatsApp com o seu pedido escrito. É só <strong>tocar em enviar</strong> na conversa para combinar o pagamento.</p>
+                    <div class="sucesso-codigo"><small>Código do pedido</small><strong id="sucesso-codigo">—</strong></div>
+                    <a class="btn btn-whats btn-bloco" id="sucesso-whats" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Abrir o WhatsApp de novo</a>
+                    <button type="button" class="btn btn-contorno btn-bloco" id="btn-novo-pedido">Fazer outro pedido</button>
+                </div>
+            </section>
+        </div>
+
+        <div class="sacolinha-rodape" id="sacolinha-rodape">
+            <div class="totais" id="totais">
+                <div class="linha"><span>Subtotal</span><span id="t-subtotal">R$ 0,00</span></div>
+                <div class="linha linha-desconto" id="t-desconto-linha" hidden><span>Desconto</span><span id="t-desconto">- R$ 0,00</span></div>
+                <div class="linha" id="t-entrega-linha" hidden><span id="t-entrega-rotulo">Frete</span><span id="t-entrega">—</span></div>
+                <div class="linha linha-total"><span>Total</span><span id="t-total">R$ 0,00</span></div>
+            </div>
+            <div class="nav-etapas">
+                <button type="button" class="btn btn-contorno" id="btn-voltar" hidden><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+                <button type="button" class="btn btn-escuro btn-cresce" id="btn-avancar">Continuar</button>
+                <button type="button" class="btn btn-whats btn-cresce" id="btn-finalizar" hidden><i class="fa-brands fa-whatsapp"></i> Finalizar no WhatsApp</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══════════ DETALHE DO PRODUTO ═══════════ -->
+    <div class="fundo-escuro" id="fundo-detalhe"></div>
+    <div class="modal-detalhe" id="modal-detalhe" role="dialog" aria-modal="true" aria-labelledby="det-nome" hidden>
+        <button type="button" class="btn-fechar btn-fechar--flutuante" id="btn-fechar-detalhe" aria-label="Fechar">&times;</button>
+        <div class="det-foto" id="det-foto"></div>
+        <div class="det-info">
+            <p class="det-cat" id="det-cat"></p>
+            <h3 id="det-nome"></h3>
+            <div class="det-etiquetas" id="det-etiquetas"></div>
+            <p class="det-desc" id="det-desc"></p>
+            <p class="det-linha" id="det-linha"></p>
+            <p class="det-estoque" id="det-estoque"></p>
+            <div class="det-preco" id="det-preco"></div>
+            <div class="det-acoes">
+                <div class="qtd-seletor">
+                    <button type="button" id="det-menos" aria-label="Diminuir">−</button>
+                    <span id="det-qtd">1</span>
+                    <button type="button" id="det-mais" aria-label="Aumentar">+</button>
+                </div>
+                <button type="button" class="btn btn-marca btn-cresce" id="det-adicionar"><i class="fa-solid fa-bag-shopping"></i> Colocar na sacolinha</button>
+            </div>
+            <p class="det-codigo" id="det-codigo"></p>
+        </div>
+    </div>
+
+    <script src="produtos.js"></script>
+    <script src="dados.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
